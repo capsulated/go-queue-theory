@@ -24,20 +24,20 @@ type Buffer struct {
 	Queue int
 }
 
-type QueuingSystem struct {
+type SpecialStatesModeling struct {
 	RandomSeed *rand.Rand
 	Source     []int
 	Buffer     []Buffer
 	Server     []Server
 }
 
-func (m *QueuingSystem) Init(λ float64, arrivalsNum int) {
+func (m *SpecialStatesModeling) Init(lambda float64, arrivalsNum int) {
 	m.RandomSeed = rand.New(rand.NewSource(time.Now().UnixNano()))
 	m.Source = make([]int, arrivalsNum)
 	m.Server = make([]Server, arrivalsNum)
 
 	arrivalGenerator := distuv.Exponential{
-		Rate:   λ,
+		Rate:   lambda,
 		Source: m.RandomSeed,
 	}
 
@@ -51,9 +51,9 @@ func (m *QueuingSystem) Init(λ float64, arrivalsNum int) {
 	}
 }
 
-func (m *QueuingSystem) Modeling(μ float64) {
+func (m *SpecialStatesModeling) Modeling(mu float64) {
 	servingGenerator := distuv.Exponential{
-		Rate:   1 / μ,
+		Rate:   1 / mu,
 		Source: m.RandomSeed,
 	}
 
@@ -102,7 +102,7 @@ func (m *QueuingSystem) Modeling(μ float64) {
 	}
 }
 
-func (m *QueuingSystem) CalcBuffer() {
+func (m *SpecialStatesModeling) CalcBuffer() {
 	// Сортировка буфера по дням
 	sort.Slice(m.Buffer, func(i, j int) bool {
 		return m.Buffer[i].Day < m.Buffer[j].Day

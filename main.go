@@ -26,13 +26,13 @@ func main() {
 	// Количество входных заявок, которые собраемся моделировать
 	// arrivalsNum = 20
 
-	λ := .25
-	μ := 2.
-	arrivalsNum := 100
+	lambda := .25
+	mu := 2.
+	arrivalsNum := 20
 
 	qs := &workers.QueuingSystem{}
-	qs.Init(λ, arrivalsNum)
-	qs.Modeling(μ)
+	qs.Init(lambda, arrivalsNum)
+	qs.Modeling(mu)
 
 	qs.CalcBuffer()
 
